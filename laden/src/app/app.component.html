@@ -24,6 +24,24 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Projects</a>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1" href="#"
+            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-user fs-5 me-1" style="color: #202122;"></i>
+          </a>
+          <ul class="dropdown-menu" style="left:-50px" aria-labelledby="navbarDropdown">
+            <li>
+              <div class="d-flex justify-content-evenly mt-2">
+                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                  <button class="btn btn-danger rounded-0 px-3">Login</button></a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> <button
+                    class="btn btn-danger rounded-0 px-3">Register</button></a>
+              </div>
+
+            </li>
+
+          </ul>
+        </li>
       </ul>
       <!-- Left links -->
     </div>
@@ -31,6 +49,13 @@
 
     <!-- Right elements -->
     <div class="d-flex align-items-center">
+      @if (loggedUserData.CustId == 0) {
+      <button class="btn btn-success" (click)="openRegisterModel()">Register</button>
+      <button class="btn btn-success mx-2" (click)="openLoginModel()">Login</button>
+      }@else {
+      <button class="btn btn-primary">{{loggedUserData.name}}</button>
+      <button class="btn btn-warning mx-2" (click)="logOut()">LogOut</button>
+      }
       <!-- Icon -->
       <a class="link-secondary me-3" href="#">
         <i class="fa fa-shopping-cart"></i>
@@ -110,3 +135,69 @@
   </div>
 </nav>
 <router-outlet />
+<div class="modal" tabindex="-1" #registerModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Register</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeRegisterModel()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <label>Name</label>
+            <input type="text" [(ngModel)]="registerObj.name" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label>Mobile</label>
+            <input type="text" [(ngModel)]="registerObj.MobileNo" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label>Password</label>
+            <input type="password" [(ngModel)]="registerObj.Password" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="openLoginModel()">Go to
+          Login</button>
+        <button type="button" class="btn btn-success" (click)="onRegister()">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" #loginModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeLoginModel()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <label>Name</label>
+            <input type="text" [(ngModel)]="loginObj.UserName" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label>Password</label>
+            <input type="password" [(ngModel)]="loginObj.UserPassword" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="openRegisterModel()">Go to
+          Register</button>
+        <button type="button" class="btn btn-success" (click)="onLogin()">Login</button>
+      </div>
+    </div>
+  </div>
+</div>

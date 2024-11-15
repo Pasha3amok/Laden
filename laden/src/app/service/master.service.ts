@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { APIResponseModel } from '../model/Product';
+import { APIResponseModel, Customer, LoginModel } from '../model/Product';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +19,13 @@ export class MasterService {
   getAllProductsByCategoryId(categoryId: number): Observable<APIResponseModel> {
     const url = `${this.apiUrl}GetAllProductsByCategoryId?id=${categoryId}`;
     return this.http.get<APIResponseModel>(url);
+  }
+  registerNewCustomer(obj: Customer): Observable<APIResponseModel> {
+    const url = `${this.apiUrl}RegisterCustomer`;
+    return this.http.post<APIResponseModel>(url, obj);
+  }
+  onLogin(obj: LoginModel): Observable<APIResponseModel> {
+    const url = `${this.apiUrl}Login`;
+    return this.http.post<APIResponseModel>(url, obj);
   }
 }

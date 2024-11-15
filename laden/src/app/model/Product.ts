@@ -11,6 +11,35 @@ export interface Category {
   userId: number;
 }
 
+export class Customer {
+  CustId: number;
+  name: string;
+  MobileNo: string;
+  Password: string;
+
+  /**
+   *
+   */
+  constructor() {
+    this.CustId = 0;
+    this.name = '';
+    this.MobileNo = '';
+    this.Password = '';
+  }
+}
+export class LoginModel {
+  UserName: string;
+  UserPassword: string;
+
+  /**
+   *
+   */
+  constructor() {
+    this.UserName = '';
+    this.UserPassword = '';
+  }
+}
+
 export interface ProductList {
   productId: number;
   productSku: string;
