@@ -25,8 +25,8 @@
           <a class="nav-link" href="#">Projects</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1" href="#"
-            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1" id="navbarDropdown"
+            role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-user fs-5 me-1" style="color: #202122;"></i>
           </a>
           <ul class="dropdown-menu" style="left:-50px" aria-labelledby="navbarDropdown">
@@ -49,7 +49,7 @@
 
     <!-- Right elements -->
     <div class="d-flex align-items-center">
-      @if (loggedUserData.CustId == 0) {
+      @if (loggedUserData.custId == 0) {
       <button class="btn btn-success" (click)="openRegisterModel()">Register</button>
       <button class="btn btn-success mx-2" (click)="openLoginModel()">Login</button>
       }@else {
@@ -57,69 +57,41 @@
       <button class="btn btn-warning mx-2" (click)="logOut()">LogOut</button>
       }
       <!-- Icon -->
-      <a class="link-secondary me-3" href="#">
-        <i class="fa fa-shopping-cart"></i>
+      <a class="link-secondary me-3">
+        <i class="fa fa-shopping-cart text-white" (click)="showCartPopup()"></i>
       </a>
-      <!-- <div class="dropdown-menu dropdown-menu-end show" style="position: absolute;
+      <div [className]="isCartPopup ? 'dropdown-menu dropdown-menu-end show' : 'dropdown-menu dropdown-menu-end hide'"
+        style="position: absolute;
                 right: 13px;top:60px" aria-labelledby="navbarDropdownMenuAvatar">
         <div class="row">
           <div class="col-8">
             <h6>Cart Items</h6>
           </div>
           <div class="col-4 text-end">
-            <i class="fa fa-close p-2"></i>
+            <i class="fa fa-close p-2" (click)="showCartPopup()"></i>
           </div>
         </div>
 
 
         <table class="table table-sm">
           <tbody>
+            @for (item of cartData; track $index) {
             <tr>
               <td>
                 <div class="rounded"
-                  style="background-image: url(https://unsplash.com/photos/ZBwQ2bCbJjw/download?force=true&amp;w=640); width: 60px; height: 60px; background-size: cover;">
+                  style="background-image: url({{item.productImageUrl}}); width: 60px; height: 60px; background-size: cover;">
                 </div>
               </td>
-              <td class="align-middle text-left">Spy Suit</td>
-              <td class="align-middle text-center">1 pieces</td>
-              <td class="align-middle text-right">$698</td>
+              <td class="align-middle text-left">{{item.productName}}</td>
+              <td class="align-middle text-center">{{item.quantity}} pieces</td>
+              <td class="align-middle text-right">${{item.productPrice}}</td>
               <td class="align-middle text-center">
                 <a href="#delete" data-toggle="modal" data-title="Delete your product ?">
                   <i class="fa fa-trash"></i>
                 </a>
               </td>
             </tr>
-            <tr>
-              <td>
-                <div class="rounded"
-                  style="background-image: url(https://unsplash.com/photos/ZBwQ2bCbJjw/download?force=true&amp;w=640); width: 60px; height: 60px; background-size: cover;">
-                </div>
-              </td>
-              <td class="align-middle text-left">Spy Suit</td>
-              <td class="align-middle text-center">1 pieces</td>
-              <td class="align-middle text-right">$698</td>
-              <td class="align-middle text-center">
-                <a href="#delete" data-toggle="modal" data-title="Delete your product ?">
-                  <i class="fa fa-trash"></i>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="rounded"
-                  style="background-image: url(https://unsplash.com/photos/ZBwQ2bCbJjw/download?force=true&amp;w=640); width: 60px; height: 60px; background-size: cover;">
-                </div>
-              </td>
-              <td class="align-middle text-left">Spy Suit</td>
-              <td class="align-middle text-center">1 pieces</td>
-              <td class="align-middle text-right">$698</td>
-              <td class="align-middle text-center">
-                <a href="#delete" data-toggle="modal" data-title="Delete your product ?">
-                  <i class="fa fa-trash"></i>
-                </a>
-              </td>
-            </tr>
-
+            }
             <tr>
               <td colspan="4" class="align-middle text-right">Quantity</td>
               <td class="align-middle text-right">55</td>
@@ -130,7 +102,7 @@
             </tr>
           </tbody>
         </table>
-      </div> -->
+      </div>
     </div>
   </div>
 </nav>

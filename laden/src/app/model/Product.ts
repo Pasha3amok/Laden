@@ -12,7 +12,7 @@ export interface Category {
 }
 
 export class Customer {
-  CustId: number;
+  custId: number;
   name: string;
   MobileNo: string;
   Password: string;
@@ -21,7 +21,7 @@ export class Customer {
    *
    */
   constructor() {
-    this.CustId = 0;
+    this.custId = 0;
     this.name = '';
     this.MobileNo = '';
     this.Password = '';
@@ -38,6 +38,37 @@ export class LoginModel {
     this.UserName = '';
     this.UserPassword = '';
   }
+}
+export class CartModel {
+  CartId: number;
+  custId: number;
+  ProductId: number;
+  Quantity: number;
+  AddedDate: Date;
+
+  /**
+   *
+   */
+  constructor() {
+    this.CartId = 0;
+    this.custId = 0;
+    this.ProductId = 0;
+    this.Quantity = 1;
+    this.AddedDate = new Date();
+  }
+}
+
+export interface CartData {
+  cartId: number;
+  custId: number;
+  productId: number;
+  quantity: number;
+  productShortName: string;
+  addedDate: string;
+  productName: string;
+  categoryName: string;
+  productImageUrl: string;
+  productPrice: number;
 }
 
 export interface ProductList {

@@ -1,6 +1,11 @@
 import { Constant } from './constant/constant';
 import { MasterService } from './service/master.service';
-import { APIResponseModel, Customer, LoginModel } from './model/Product';
+import {
+  APIResponseModel,
+  CartData,
+  Customer,
+  LoginModel,
+} from './model/Product';
 import {
   Component,
   ElementRef,
@@ -29,13 +34,27 @@ export class AppComponent implements OnInit {
 
   @ViewChild('registerModal') registerModal: ElementRef | undefined;
   @ViewChild('loginModal') loginModal: ElementRef | undefined;
+  isCartPopup: boolean = false;
+  cartData: CartData[] = [];
 
   ngOnInit(): void {
     const isUser = localStorage.getItem(Constant.LOCAL_KEY);
     if (isUser != null) {
       const parseObj = JSON.parse(isUser);
       this.loggedUserData = parseObj;
+      this.getCartItems();
     }
+  }
+  getCartItems() {
+    this.masterService
+      .getCartProductsByCustomerId(this.loggedUserData.custId)
+      .subscribe((res: APIResponseModel) => {
+        this.cartData = res.data;
+      });
+  }
+
+  showCartPopup() {
+    this.isCartPopup = !this.isCartPopup;
   }
 
   openRegisterModel() {

@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { APIResponseModel, Customer, LoginModel } from '../model/Product';
+import {
+  APIResponseModel,
+  CartModel,
+  Customer,
+  LoginModel,
+} from '../model/Product';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +29,18 @@ export class MasterService {
     const url = `${this.apiUrl}RegisterCustomer`;
     return this.http.post<APIResponseModel>(url, obj);
   }
+  addToCart(obj: CartModel): Observable<APIResponseModel> {
+    const url = `${this.apiUrl}AddToCart`;
+    return this.http.post<APIResponseModel>(url, obj);
+  }
   onLogin(obj: LoginModel): Observable<APIResponseModel> {
     const url = `${this.apiUrl}Login`;
     return this.http.post<APIResponseModel>(url, obj);
+  }
+  getCartProductsByCustomerId(
+    loggedUserId: number
+  ): Observable<APIResponseModel> {
+    const url = `${this.apiUrl}GetCartProductsByCustomerId?id=${loggedUserId}`;
+    return this.http.get<APIResponseModel>(url);
   }
 }

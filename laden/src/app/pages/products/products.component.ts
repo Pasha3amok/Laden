@@ -1,4 +1,9 @@
-import { Category, ProductList } from './../../model/Product';
+import {
+  CartModel,
+  Category,
+  Customer,
+  ProductList,
+} from './../../model/Product';
 import { APIResponseModel } from '../../model/Product';
 import { MasterService } from './../../service/master.service';
 import {
@@ -11,6 +16,7 @@ import {
 } from '@angular/core';
 import { map, Observable, Subscription } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Constant } from '../../constant/constant';
 
 @Component({
   selector: 'app-products',
@@ -25,6 +31,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
   subscriptionList: Subscription[] = [];
 
   masterService = inject(MasterService);
+  loggedUserData: Customer = new Customer();
+
+  constructor() {
+    const isUser = localStorage.getItem(Constant.LOCAL_KEY);
+    if (isUser != null) {
+      const parseObj = JSON.parse(isUser);
+      this.loggedUserData = parseObj;
+    }
+  }
 
   ngOnInit(): void {
     this.loadAllProducts();
@@ -49,6 +64,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
           this.productList.set(result.data);
         })
     );
+  }
+
+  onAddToCart(productId: number) {
+    const cartObj: CartModel = new CartModel();
+    cartObj.ProductId = productId;
+    cartObj.custId = this.loggedUserData.custId;
+    this.masterService.addToCart(cartObj).subscribe((res: APIResponseModel) => {
+      if (res.result) {
+        alert('Product added to cart');
+      } else {
+        alert(res.message);
+      }
+    });
   }
 
   ngOnDestroy(): void {
