@@ -73,6 +73,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.masterService.addToCart(cartObj).subscribe((res: APIResponseModel) => {
       if (res.result) {
         alert('Product added to cart');
+        this.masterService.onCartAdded.next(true);
       } else {
         alert(res.message);
       }

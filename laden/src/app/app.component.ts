@@ -44,6 +44,21 @@ export class AppComponent implements OnInit {
       this.loggedUserData = parseObj;
       this.getCartItems();
     }
+    this.masterService.onCartAdded.subscribe((res: boolean) => {
+      if (res) {
+        this.getCartItems();
+      }
+    });
+  }
+  onRemoveProduct(cartId: number) {
+    this.masterService
+      .deleteProductFromCartById(cartId)
+      .subscribe((res: APIResponseModel) => {
+        if (res.result) {
+          alert('Removed');
+          this.getCartItems();
+        }
+      });
   }
   getCartItems() {
     this.masterService

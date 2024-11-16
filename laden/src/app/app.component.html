@@ -61,7 +61,7 @@
         <i class="fa fa-shopping-cart text-white" (click)="showCartPopup()"></i>
       </a>
       <div [className]="isCartPopup ? 'dropdown-menu dropdown-menu-end show' : 'dropdown-menu dropdown-menu-end hide'"
-        style="position: absolute;
+        style="position: fixed;
                 right: 13px;top:60px" aria-labelledby="navbarDropdownMenuAvatar">
         <div class="row">
           <div class="col-8">
@@ -86,7 +86,7 @@
               <td class="align-middle text-center">{{item.quantity}} pieces</td>
               <td class="align-middle text-right">${{item.productPrice}}</td>
               <td class="align-middle text-center">
-                <a href="#delete" data-toggle="modal" data-title="Delete your product ?">
+                <a (click)="onRemoveProduct(item.cartId)" data-toggle="modal" data-title="Delete your product ?">
                   <i class="fa fa-trash"></i>
                 </a>
               </td>
