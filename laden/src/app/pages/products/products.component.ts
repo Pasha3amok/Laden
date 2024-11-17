@@ -31,15 +31,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   subscriptionList: Subscription[] = [];
 
   masterService = inject(MasterService);
-  loggedUserData: Customer = new Customer();
 
-  constructor() {
-    const isUser = localStorage.getItem(Constant.LOCAL_KEY);
-    if (isUser != null) {
-      const parseObj = JSON.parse(isUser);
-      this.loggedUserData = parseObj;
-    }
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.loadAllProducts();
@@ -69,7 +62,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   onAddToCart(productId: number) {
     const cartObj: CartModel = new CartModel();
     cartObj.ProductId = productId;
-    cartObj.custId = this.loggedUserData.custId;
+    cartObj.custId = this.masterService.loggedUserData.custId;
     this.masterService.addToCart(cartObj).subscribe((res: APIResponseModel) => {
       if (res.result) {
         alert('Product added to cart');

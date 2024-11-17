@@ -5,6 +5,7 @@ import {
   CartData,
   Customer,
   LoginModel,
+  OrderModel,
 } from './model/Product';
 import {
   Component,
@@ -14,12 +15,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule],
+  imports: [RouterOutlet, FormsModule, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
   @ViewChild('loginModal') loginModal: ElementRef | undefined;
   isCartPopup: boolean = false;
   cartData: CartData[] = [];
+  totalAmount: number = 0;
 
   ngOnInit(): void {
     const isUser = localStorage.getItem(Constant.LOCAL_KEY);
@@ -61,10 +63,14 @@ export class AppComponent implements OnInit {
       });
   }
   getCartItems() {
+    this.totalAmount = 0;
     this.masterService
       .getCartProductsByCustomerId(this.loggedUserData.custId)
       .subscribe((res: APIResponseModel) => {
         this.cartData = res.data;
+        this.cartData.forEach((element) => {
+          this.totalAmount = this.totalAmount + element.productPrice;
+        });
       });
   }
 

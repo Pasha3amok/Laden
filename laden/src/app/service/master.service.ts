@@ -6,7 +6,9 @@ import {
   CartModel,
   Customer,
   LoginModel,
+  OrderModel,
 } from '../model/Product';
+import { Constant } from '../constant/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +16,15 @@ import {
 export class MasterService {
   apiUrl: string = 'https://freeapi.miniprojectideas.com/api/BigBasket/';
   onCartAdded: Subject<boolean> = new Subject<boolean>();
+  loggedUserData: Customer = new Customer();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const isUser = localStorage.getItem(Constant.LOCAL_KEY);
+    if (isUser != null) {
+      const parseObj = JSON.parse(isUser);
+      this.loggedUserData = parseObj;
+    }
+  }
 
   getAllProducts(): Observable<APIResponseModel> {
     return this.http.get<APIResponseModel>(this.apiUrl + 'GetAllProducts');
@@ -49,5 +58,9 @@ export class MasterService {
   deleteProductFromCartById(cartId: number): Observable<APIResponseModel> {
     const url = `${this.apiUrl}DeleteProductFromCartById?id=${cartId}`;
     return this.http.get<APIResponseModel>(url);
+  }
+  onPlaceOrder(obj: OrderModel): Observable<APIResponseModel> {
+    const url = `${this.apiUrl}PlaceOrder`;
+    return this.http.post<APIResponseModel>(url, obj);
   }
 }
