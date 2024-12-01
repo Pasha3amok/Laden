@@ -6,14 +6,7 @@ import {
 } from './../../model/Product';
 import { APIResponseModel } from '../../model/Product';
 import { MasterService } from './../../service/master.service';
-import {
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-  signal,
-  Signal,
-} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { map, Observable, Subscription } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Constant } from '../../constant/constant';

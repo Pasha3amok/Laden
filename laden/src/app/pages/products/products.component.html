@@ -1,29 +1,39 @@
-<div class="container-fluid">
+<div class="container-fluid" style="display: flex;">
   <div class="row">
-    <div class="col-2">
-      <h5>Category</h5>
+    <h2>Category</h2>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
       @for (item of categoryList$ | async; track $index) {
-      <button class="btn btn-success mt-2"
+      <button class="btn category-btn btn-dark m-2"
         (click)="getProductByCategory(item.categoryId)">{{item.categoryName}}</button>
       }
     </div>
-    <div class="col-10">
-      <div class="row">
-        @for (item of productList(); track $index) {
-        <div class="col-3 pt-3">
-          <div class="card product-card">
-            <img [src]="item.productImageUrl" class="card-img-top product-image" alt="Product Image">
-            <span class="category-badge">{{item.categoryName}}</span>
-            <div class="card-body">
-              <h5 class="card-title">{{item.productName}}</h5>
-              <p class="product-price">{{item.productPrice}}$</p>
-              <button class="btn add-to-cart-btn" (click)="onAddToCart(item.productId)">Add to Cart</button>
+
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 align-middle">
+      @for (item of productList(); track $index) {
+      <div class="col pt-3">
+        <div class="card product-card h-100">
+          <span class="category-badge bg-dark text-white">{{item.categoryName}}</span>
+          <!-- Product image-->
+          <img class="card-img-top product-image" [src]="item.productImageUrl" alt="..." />
+          <!-- Product details-->
+          <div class="card-body p-4">
+            <div class="text-center">
+              <!-- Product name-->
+              <h5 class="card-title fw-bolder">{{item.productName}}</h5>
+              <!-- Product price-->
+              <div class="product-price">${{item.productPrice}}</div>
             </div>
           </div>
+          <!-- Product actions-->
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <button class="btn add-to-cart-btn btn-outline-dark mt-auto w-100" (click)="onAddToCart(item.productId)">Add
+              to
+              cart</button>
+          </div>
         </div>
-        }
       </div>
+      }
     </div>
-  </div>
 
+  </div>
 </div>
